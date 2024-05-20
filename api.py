@@ -144,5 +144,86 @@ def delete_product(id):
     db.session.commit()
     return jsonify({'message': 'Product deleted successfully'}), 204
 
+@app.route('/sale', methods=['POST'])
+def add_sale():
+    data = request.json
+    new_sale = Sale(
+        Date=data['Date'],
+        Total=data['Total'],
+        Client_ID=data.get('Client_ID')
+    )
+    db.session.add(new_sale)
+    db.session.commit()
+    return sale_schema.jsonify(new_sale), 201
+
+@app.route('/sale', methods=['GET'])
+def get_sales():
+    sales = Sale.query.all()
+    return sales_schema.jsonify(sales)
+
+@app.route('/sale/<int:id>', methods=['GET'])
+def get_sale(id):
+    sale = Sale.query.get_or_404(id)
+    return sale_schema.jsonify(sale)
+
+@app.route('/sale/<int:id>', methods=['PUT'])
+def update_sale(id):
+    sale = Sale.query.get_or_404(id)
+    data = request.json
+    sale.Date = data.get('Date', sale.Date)
+    sale.Total = data.get('Total', sale.Total)
+    sale.Client_ID = data.get('Client_ID', sale.Client_ID)
+    db.session.commit()
+    return sale_schema.jsonify(sale)
+
+@app.route('/sale/<int:id>', methods=['DELETE'])
+def delete_sale(id):
+    sale = Sale.query.get_or_404(id)
+    db.session.delete(sale)
+    db.session.commit()
+    return jsonify({'message': 'Sale deleted successfully'}), 204
+
+@app.route('/salesdetail', methods=['POST'])
+def add_sales_detail():
+    data = request.json
+    new_sales_detail = SalesDetail(
+        Sales_ID=data['Sales_ID'],
+        Product_ID=data['Product_ID'],
+        Quantity=data['Quantity'],
+        Unit_Price=data['Unit_Price']
+    )
+    db.session.add(new_sales_detail)
+    db.session.commit()
+    return sales_detail_schema.jsonify(new_sales_detail), 201
+
+@app.route('/salesdetail', methods=['GET'])
+def get_sales_details():
+    sales_details = SalesDetail.query.all()
+    return sales_details_schema.jsonify(sales_details)
+
+@app.route('/salesdetail/<int:id>', methods=['GET'])
+def get_sales_detail(id):
+    sales_detail = SalesDetail.query.get_or_404(id)
+    return sales_detail_schema.jsonify(sales_detail)
+
+@app.route('/salesdetail/<int:id>', methods=['PUT'])
+def update_sales_detail(id):
+    sales_detail = SalesDetail.query.get_or_404(id)
+    data = request.json
+    sales_detail.Sales_ID = data.get('Sales_ID', sales_detail.Sales_ID)
+    sales_detail.Product_ID = data.get('Product_ID', sales_detail.Product_ID)
+    sales_detail.Quantity = data.get('Quantity', sales_detail.Quantity)
+    sales_detail.Unit_Price = data.get('Unit_Price', sales_detail.Unit_Price)
+    db.session.commit()
+    return sales_detail_schema.jsonify(sales_detail)
+
+@app.route('/salesdetail/<int:id>', methods=['DELETE'])
+def delete_sales_detail(id):
+    sales_detail = SalesDetail.query.get_or_404(id)
+    db.session.delete(sales_detail)
+    db.session.commit()
+    return jsonify({'message': 'Sales detail deleted successfully'}), 204
+
+
 if __name__ == '__main__':
     app.run(debug=True)
