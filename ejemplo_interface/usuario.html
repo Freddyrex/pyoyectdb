@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        .nav-item {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        main {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        #login-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        form input[type="text"],
+        form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        form input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .login-message {
+            display: none;
+            margin-top: 20px;
+            color: green;
+        }
+
+        #welcome-message {
+            display: none;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="nav-item">Inicio</a>
+        <a href="producto.html" class="nav-item">Producto</a>
+        <a href="venta.html" class="nav-item">Venta</a>
+        <a href="cliente.html" class="nav-item">Cliente</a>
+        <a href="proveedor.html" class="nav-item">Proveedor</a>
+        <a href="usuario.html" class="nav-item" id="user-link">Usuario</a>
+        <a href="ventas_usuario.html" class="nav-item">Ventas de Usuario</a>
+        <a href="detalles_venta.html" class="nav-item">Detalles de Venta</a>
+    </nav>
+
+    <main>
+        <div id="login-container">
+            <h1>Iniciar Sesión</h1>
+            <form id="login-form">
+                <label for="username">Nombre de Usuario:</label>
+                <input type="text" id="username" name="username" required><br><br>
+
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required><br><br>
+
+                <input type="submit" value="Iniciar Sesión">
+            </form>
+        </div>
+
+        <div id="welcome-message">
+            <h1>¡Bienvenido!</h1>
+            <p>Inicio de sesión exitoso.</p>
+        </div>
+
+        <p class="login-message" id="login-success">Inicio de sesión exitoso. Redirigiendo...</p>
+    </main>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const username = formData.get('username');
+            const password = formData.get('password');
+            try {
+                const response = await fetch('http://localhost:5000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success) {
+                        document.getElementById('login-container').style.display = 'none';
+                        document.getElementById('welcome-message').style.display = 'block';
+                    } else {
+                        alert('Login failed: ' + result.error);
+                    }
+                } else {
+                    alert('Network response was not ok');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const username = formData.get('username');
+            const password = formData.get('password');
+            try {
+                const response = await fetch('http://localhost:5000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
+                if (response.ok) {
+                    const result = await response.json();
+                    if (result.success) {
+                        alert('Login successful');
+                    } else {
+                        alert('Login failed');
+                    }
+                } else {
+                    alert('Network response was not ok');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        });
+        </script>
+        
