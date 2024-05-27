@@ -1,7 +1,7 @@
 # pyoyectdb
-En el documento "api.py" se encuentra la api con algunos metodos implemntados
+En el documento "api.py" se encuentra la api con actualmente todos los metodos implementados.
 
-dentro de la carpeta "ejemplo interface" se encuentra una demo de como sera la pagina web del punto de venta.
+Dentro de la carpeta "ejemplo interface" se encuentra una demo de como sera la pagina web del punto de venta.
 ───────────────────────────────────────
 ───▐▀▄───────▄▀▌───▄▄▄▄▄▄▄─────────────
 ───▌▒▒▀▄▄▄▄▄▀▒▒▐▄▀▀▒██▒██▒▀▀▄──────────
