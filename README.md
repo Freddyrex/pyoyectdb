@@ -1,5 +1,4 @@
 # pyoyectdb
-
 En el documento "api.py" se encuentra la api con algunos metodos implemntados
 
-en index.html y styles.css se en cuentra una interface simple de como seria la paguina en el apartado de enviar productos
+dentro de la carpeta "ejemplo interface" se encuentra una demo de como sera la pagina web del punto de venta.
