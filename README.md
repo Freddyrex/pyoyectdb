@@ -1,5 +1,5 @@
 # PUNTO DE VENTA
-En este repositorio se encuentra un proyecto de un punto de venta el cual fue diseñado para resolver una problematica de la materi de Base de datos, este proyecto se encuentra programado en HTML, CSS, javascrip y python.
+En este repositorio se encuentra un proyecto de un punto de venta el cual fue diseñado para resolver una problematica de la materia de Base de datos, este proyecto se encuentra programado en HTML, CSS, javascrip y python.
 
 
 En el documento "api.py" se encuentra la api con actualmente todos los metodos implementados.
