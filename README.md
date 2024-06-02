@@ -1,9 +1,9 @@
-## PUNTO DE VENTA
+# PUNTO DE VENTA
 
 En este repositorio se aloja un proyecto de un punto de venta diseñado para abordar una problemática de la materia de Base de Datos. Este proyecto está programado utilizando HTML, CSS, JavaScript y Python.
 Dentro del archivo "api.py" se encuentra la API con todos los métodos actualmente implementados. El modelo lógico de la base de datos está adjunto en el archivo "modelo_logico_page-0001.jpg". Además, en la carpeta "ejemplo_interface" se encuentra una demostración de cómo será la página web del punto de venta, donde se han implementado varias de las funcionalidades.
 
-# Esquema de base de datos
+## Esquema de base de datos
 
 | Campo              | Tipo              | Restricciones              |
 |--------------------|-------------------|-----------------------------|
@@ -16,7 +16,7 @@ Dentro del archivo "api.py" se encuentra la API con todos los métodos actualmen
 | Supplier_ID        | INT               |                             |
 | FOREIGN KEY (Supplier_ID) | REFERENCIAS Supplier(Supplier_ID) |
 
-## Tabla: Sale
+### Tabla: Sale
 
 | Campo       | Tipo       | Restricciones            |
 |-------------|------------|---------------------------|
@@ -26,7 +26,7 @@ Dentro del archivo "api.py" se encuentra la API con todos los métodos actualmen
 | Client_ID   | INT        |                           |
 | FOREIGN KEY (Client_ID) | REFERENCIAS Client(Client_ID) |
 
-## Tabla: Client
+### Tabla: Client
 
 | Campo      | Tipo         | Restricciones        |
 |------------|--------------|-----------------------|
@@ -45,7 +45,7 @@ Dentro del archivo "api.py" se encuentra la API con todos los métodos actualmen
 | Password   | VARCHAR(255) | NOT NULL              |
 | Role       | VARCHAR(50)  |                       |
 
-## Tabla: Supplier
+### Tabla: Supplier
 
 | Campo        | Tipo         | Restricciones        |
 |--------------|--------------|-----------------------|
@@ -55,7 +55,7 @@ Dentro del archivo "api.py" se encuentra la API con todos los métodos actualmen
 | Telephone    | VARCHAR(20)  |                       |
 | Email        | VARCHAR(255) |                       |
 
-## Tabla: SalesDetail
+### Tabla: SalesDetail
 
 | Campo           | Tipo         | Restricciones            |
 |-----------------|--------------|---------------------------|
@@ -67,7 +67,7 @@ Dentro del archivo "api.py" se encuentra la API con todos los métodos actualmen
 | FOREIGN KEY (Sales_ID)   | REFERENCIAS Sale(Sales_ID)     |
 | FOREIGN KEY (Product_ID) | REFERENCIAS Product(Product_ID) |
 
-## Tabla: UserSale
+### Tabla: UserSale
 
 | Campo       | Tipo       | Restricciones            |
 |-------------|------------|---------------------------|
