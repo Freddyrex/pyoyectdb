@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Detalles de Venta por ID de Venta</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        .nav-item {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        main {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .form-container form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-container label {
+            margin-bottom: 10px;
+        }
+
+        .form-container input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        .form-container button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .form-container button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        /* Estilos para la tabla */
+        .table-container {
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-container th, .table-container td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .table-container th {
+            background-color: #f2f2f2;
+        }
+
+        .table-container tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .table-container button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            display: block;
+            margin: 0 auto;
+        }
+        .print-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .print-button:hover {
+            background-color: #4CAF50;
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index1.html" class="nav-item">Inicio</a>
+        <a href="producto.html" class="nav-item">Producto</a>
+        <a href="venta.html" class="nav-item">Venta</a>
+        <a href="cliente.html" class="nav-item">Cliente</a>
+        <a href="proveedor.html" class="nav-item">Proveedor</a>
+        <a href="usuario.html" class="nav-item">Usuario</a>
+        <a href="ventas_usuario.html" class="nav-item">Ventas de Usuario</a>
+        <a href="detalles_venta.html" class="nav-item">Detalles de Venta</a>
+    </nav>
+
+    <div class="form-container">
+        <h1>Buscar Detalles de Venta por ID de Venta</h1>
+        <form id="salesForm">
+            <label for="salesId">ID de Venta:</label>
+            <input type="number" id="salesId" name="salesId" required>
+            <label for="clientName">Nombre del Cliente:</label>
+            <input type="text" id="clientName" name="clientName" required>
+            <button type="submit">Buscar Detalles de Venta</button>
+        </form>
+    </div>
+
+    <div class="table-container">
+        <h1>Detalles de Venta</h1>
+        <table id="salesDetailTable">
+            <thead>
+                <tr>
+                    <th>ID de Detalle de Venta</th>
+                    <th>ID de Venta</th>
+                    <th>ID de Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Sales detail rows will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <div id="clientNameContainer" class="table-container">
+        <h2>Nombre del Cliente:</h2>
+        <p id="clientNameValue"></p>
+    </div>
+
+    <div id="totalContainer" class="table-container">
+        <h2>Total de la Venta:</h2>
+        <p id="totalValue"></p>
+    </div>
+    <button class="print-button" onclick="printInvoice()">Imprimir Factura</button>
+
+    <script>
+        document.getElementById('salesForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const salesId = document.getElementById('salesId').value;
+            const clientName = document.getElementById('clientName').value;
+
+            try {
+                const salesResponse = await fetch(`http://localhost:5000/sale/${salesId}`);
+                if (salesResponse.ok) {
+                    const sale = await salesResponse.json();
+                    
+                    const salesDetailsResponse = await fetch(`http://localhost:5000/salesdetail?Sales_ID=${salesId}`);
+                    if (salesDetailsResponse.ok) {
+                        const salesDetails = await salesDetailsResponse.json();
+                        const filteredSalesDetails = salesDetails.filter(detail => detail.Sales_ID === parseInt(salesId));
+                        if (filteredSalesDetails.length > 0) {
+                            updateSalesDetailTable(filteredSalesDetails);
+                            updateClientName(clientName);
+                            updateTotal(filteredSalesDetails);
+                        } else {
+                            alert('No se encontraron detalles de venta para el ID de venta proporcionado.');
+                        }
+                    } else {
+                        alert('No se encontraron detalles de venta para el ID de venta proporcionado.');
+                    }
+                } else {
+                    alert('No se encontró ninguna venta para el ID proporcionado.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al buscar detalles de venta.');
+            }
+        });
+
+        function updateSalesDetailTable(salesDetails) {
+            const salesDetailTableBody = document.querySelector('#salesDetailTable tbody');
+            salesDetailTableBody.innerHTML = '';
+
+            salesDetails.forEach(salesDetail => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${salesDetail.SalesDetail_ID}</td>
+                    <td>${salesDetail.Sales_ID}</td>
+                    <td>${salesDetail.Product_ID}</td>
+                    <td>${salesDetail.Quantity}</td>
+                    <td>${salesDetail.Unit_Price}</td>
+                `;
+                salesDetailTableBody.appendChild(row);
+            });
+        }
+
+        function updateClientName(clientName) {
+            const clientNameValue = document.getElementById('clientNameValue');
+            clientNameValue.textContent = clientName;
+        }
+
+        function updateTotal(salesDetails) {
+            const total = salesDetails.reduce((acc, detail) => acc + (detail.Quantity * detail.Unit_Price), 0);
+            const totalValue = document.getElementById('totalValue');
+            totalValue.textContent = `$${total.toFixed(2)}`;
+        }
+
+        function printInvoice() {
+            const table = document.getElementById('salesDetailTable');
+            const clientName = document.getElementById('clientNameValue').textContent;
+            const total = document.getElementById('totalValue').textContent;
+            if (table) {
+                const newWin = window.open('', 'Print-Window');
+                newWin.document.open();
+                newWin.document.write('<html><body>');
+                newWin.document.write('<style>table {border-collapse: collapse;} th, td {border: 1px solid black; padding: 8px;} h1, h2, p {margin: 0;}</style>');
+                newWin.document.write('<h1>Factura</h1>');
+                newWin.document.write('<h2>Detalles de Venta</h2>');
+                newWin.document.write('<table>');
+                newWin.document.write('<thead><tr><th>ID de Detalle de Venta</th><th>ID de Venta</th><th>ID de Producto</th><th>Cantidad</th><th>Precio Unitario</th></tr></thead>');
+                newWin.document.write('<tbody>');
+                newWin.document.write(table.innerHTML);
+                newWin.document.write('</tbody>');
+                newWin.document.write('</table>');
+                newWin.document.write('<h2>Nombre del Cliente:</h2>');
+                newWin.document.write(`<p>${clientName}</p>`);
+                newWin.document.write('<h2>Total de la Venta:</h2>');
+                newWin.document.write(`<p>${total}</p>`);
+                newWin.document.write('</body></html>');
+                newWin.document.close();
+                newWin.print();
+            }
+        }
+    </script>
+</body>
+</html>

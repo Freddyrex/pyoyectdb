@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página Simple</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        .nav-item {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        main {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .user-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .user-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        
+        <a href="index2.html" class="nav-item">Inicio</a>
+        <a href="producto.html" class="nav-item">Producto</a>
+        <a href="venta.html" class="nav-item">Venta</a>
+        <a href="cliente.html" class="nav-item">Cliente</a>
+        <a href="proveedor.html" class="nav-item">Proveedor</a>
+        <a href="usuario2.html" class="nav-item">Usuario</a>
+        <a href="ventas_usuario.html" class="nav-item">Ventas de Usuario</a>
+        <a href="detalles_venta.html" class="nav-item">Detalles de Venta</a>
+    </nav>
+
+    <main>
+        <h1>Bienvenido a nuestro punto de venta</h1>
+        <p>Usa los botones de arriba para realizar acciones</p>
+    </main>
+</body>
+</html>

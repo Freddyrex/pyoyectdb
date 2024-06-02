@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venta - Agregar Nueva Venta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .navbar {
+            width: 100%;
+            background-color: #333;
+            overflow: hidden;
+        }
+
+        .nav-item {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        main {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        #sale-form-container, #sale-table-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        form input[type="date"],
+        form input[type="number"],
+        form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        form input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        form input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index2.html" class="nav-item">Inicio</a>
+        <a href="producto.html" class="nav-item">Producto</a>
+        <a href="venta.html" class="nav-item">Venta</a>
+        <a href="cliente.html" class="nav-item">Cliente</a>
+        <a href="proveedor.html" class="nav-item">Proveedor</a>
+        <a href="usuario2.html" class="nav-item">Usuario</a>
+        <a href="ventas_usuario.html" class="nav-item">Ventas de Usuario</a>
+        <a href="detalles_venta.html" class="nav-item">Detalles de Venta</a>
+    </nav>
+
+    <main>
+        <div id="sale-form-container">
+            <h1>Agregar Nueva Venta</h1>
+            <form id="sale-form" action="/sale" method="POST">
+                <label for="fecha">Fecha:</label>
+                <input type="date" id="fecha" name="Date" required>
+                
+                <label for="total">Total:</label>
+                <input type="number" id="total" name="Total" min="0.01" step="0.01" required>
+                
+                <label for="cliente">Cliente:</label>
+                <select id="cliente" name="Client_ID" required>
+                    <!-- Opciones para seleccionar un cliente -->
+                </select>
+
+                <input type="submit" id="agregar-venta" value="Agregar Venta">
+            </form>
+        </div>
+
+        <div id="sale-table-container">
+            <h1>Ventas Registradas</h1>
+            <button id="ver-ventas">Ver Ventas</button>
+            <table id="sale-table">
+                <thead>
+                    <tr>
+                        <th>ID de Venta</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+                        <th>ID de Cliente</th>
+                        <th>Acción</th> <!-- Nueva columna para botones de acción -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Filas de la tabla de ventas -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        async function loadClients() {
+            try {
+                const response = await fetch('http://localhost:5000/client', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                if (response.ok) {
+                    const clients = await response.json();
+                    const clientSelect = document.getElementById('cliente');
+                    clientSelect.innerHTML = ''; // Limpiar opciones anteriores
+                    clients.forEach(client => {
+                        const option = document.createElement('option');
+                        option.value = client.Client_ID;
+                        option.textContent = client.Name;
+                        clientSelect.appendChild(option);
+                    });
+                } else {
+                    alert('Error al cargar clientes');
+                }
+            } catch (error) {                alert('Error: ' + error.message);
+            }
+        }
+
+        document.getElementById('sale-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = {
+                Date: formData.get('Date'),
+                Total: formData.get('Total'),
+                Client_ID: formData.get('Client_ID')
+            };
+            try {
+                const response = await fetch('http://localhost:5000/sale', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+                if (response.ok) {
+                    alert('Venta agregada exitosamente');
+                    event.target.reset();
+                } else {
+                    alert('Error al agregar venta');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        });
+
+        document.getElementById('ver-ventas').addEventListener('click', async function() {
+            try {
+                const response = await fetch('http://localhost:5000/sale', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+                if (response.ok) {
+                    const sales = await response.json();
+                    const tbody = document.querySelector('#sale-table tbody');
+                    tbody.innerHTML = ''; // Limpiar la tabla antes de llenarla
+                    sales.forEach(sale => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${sale.Sales_ID}</td>
+                            <td>${sale.Date}</td>
+                            <td>${sale.Total}</td>
+                            <td>${sale.Client_ID}</td>
+                            <td><button class="delete-button" data-sale-id="${sale.Sales_ID}">Eliminar</button></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+
+                    // Agregar listeners para los botones de eliminar
+                    const deleteButtons = document.querySelectorAll('.delete-button');
+                    deleteButtons.forEach(button => {
+                        button.addEventListener('click', async () => {
+                            const saleId = button.getAttribute('data-sale-id');
+                            const confirmDelete = confirm('¿Estás seguro que deseas eliminar esta venta?');
+                            if (confirmDelete) {
+                                try {
+                                    const response = await fetch(`http://localhost:5000/sale/${saleId}`, {
+                                        method: 'DELETE',
+                                    });
+                                    if (response.ok) {
+                                        alert('Venta eliminada exitosamente');
+                                        button.closest('tr').remove(); // Eliminar la fila de la tabla
+                                    } else {
+                                        alert('Error al eliminar venta');
+                                    }
+                                } catch (error) {
+                                    alert('Error: ' + error.message);
+                                }
+                            }
+                        });
+                    });
+                } else {
+                    alert('Error al obtener ventas');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        });
+
+        // Cargar clientes al cargar la página
+        loadClients();
+    </script>
+</body>
+</html>
