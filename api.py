@@ -1,11 +1,12 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow.sqla import SQLAlchemyAutoSchema
+from marshmallow.fields import Integer
 from marshmallow import fields
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # Habilitar CORS en tu aplicación Flask
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:3355@localhost:3306/test'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -13,6 +14,7 @@ db = SQLAlchemy(app)
 
 # Modelos
 class Product(db.Model):
+    __tablename__ = 'product'
     Product_ID = db.Column(db.Integer, primary_key=True)
     Name = db.Column(db.String(255), nullable=False)
     Description = db.Column(db.Text, nullable=True)
@@ -23,12 +25,15 @@ class Product(db.Model):
     supplier = db.relationship('Supplier', backref='products')
 
 class Sale(db.Model):
+    __tablename__ = 'sale'
     Sales_ID = db.Column(db.Integer, primary_key=True)
     Date = db.Column(db.Date, nullable=False)
     Total = db.Column(db.Numeric(10, 2), nullable=False)
     Client_ID = db.Column(db.Integer, db.ForeignKey('client.Client_ID', name='sale_client_fk'), nullable=True)
+    client = db.relationship('Client', backref='sales')
 
 class Client(db.Model):
+    __tablename__ = 'client'
     Client_ID = db.Column(db.Integer, primary_key=True)
     Name = db.Column(db.String(255), nullable=False)
     Address = db.Column(db.String(255), nullable=True)
@@ -36,12 +41,14 @@ class Client(db.Model):
     Telephone = db.Column(db.String(20), nullable=True)
 
 class User(db.Model):
+    __tablename__ = 'user'
     User_ID = db.Column(db.Integer, primary_key=True)
     User_Name = db.Column(db.String(255), nullable=False)
     Password = db.Column(db.String(255), nullable=False)
     Role = db.Column(db.String(50), nullable=True)
 
 class Supplier(db.Model):
+    __tablename__ = 'supplier'
     Supplier_ID = db.Column(db.Integer, primary_key=True)
     Name = db.Column(db.String(255), nullable=False)
     Address = db.Column(db.String(255), nullable=True)
@@ -49,27 +56,32 @@ class Supplier(db.Model):
     Email = db.Column(db.String(255), nullable=True)
 
 class SalesDetail(db.Model):
+    __tablename__ = 'sales_detail'
     SalesDetail_ID = db.Column(db.Integer, primary_key=True)
-    Sales_ID = db.Column(db.Integer, db.ForeignKey('sale.Sales_ID'), nullable=True)
-    Product_ID = db.Column(db.Integer, db.ForeignKey('product.Product_ID'), nullable=True)
+    Sales_ID = db.Column(db.Integer, db.ForeignKey('sale.Sales_ID', name='sales_detail_sale_fk'), nullable=True)
+    Product_ID = db.Column(db.Integer, db.ForeignKey('product.Product_ID', name='sales_detail_product_fk'), nullable=True)
     Quantity = db.Column(db.Integer, nullable=False)
     Unit_Price = db.Column(db.Numeric(10, 2), nullable=False)
 
 class UserSale(db.Model):
+    __tablename__ = 'user_sale'
     UserSale_ID = db.Column(db.Integer, primary_key=True)
-    User_ID = db.Column(db.Integer, db.ForeignKey('user.User_ID'), nullable=True)
-    Sales_ID = db.Column(db.Integer, db.ForeignKey('sale.Sales_ID'), nullable=True)
+    User_ID = db.Column(db.Integer, db.ForeignKey('user.User_ID', name='user_sale_user_fk'), nullable=True)
+    Sales_ID = db.Column(db.Integer, db.ForeignKey('sale.Sales_ID', name='user_sale_sale_fk'), nullable=True)
 
 # Esquemas
 class ProductSchema(SQLAlchemyAutoSchema):
+    Supplier_ID = Integer()  # Usamos Integer directamente
     class Meta:
         model = Product
         load_instance = True
 
 class SaleSchema(SQLAlchemyAutoSchema):
-    class Meta:
-        model = Sale
-        load_instance = True
+        Client_ID = Integer()  # Usamos Integer directamente
+        class Meta:
+            model = Sale
+            load_instance = True
+        
 
 class ClientSchema(SQLAlchemyAutoSchema):
     class Meta:
@@ -87,11 +99,16 @@ class SupplierSchema(SQLAlchemyAutoSchema):
         load_instance = True
 
 class SalesDetailSchema(SQLAlchemyAutoSchema):
+    Sales_ID = Integer()
+    Product_ID = Integer()
+    Unit_Price = fields.Decimal(as_string=True)
     class Meta:
         model = SalesDetail
         load_instance = True
 
 class UserSaleSchema(SQLAlchemyAutoSchema):
+    User_ID = Integer()
+    Sales_ID = Integer()
     class Meta:
         model = UserSale
         load_instance = True
@@ -181,7 +198,6 @@ def delete_product(id):
     db.session.commit()
     return jsonify({'message': 'Product deleted successfully'}), 204
 
-
 # Rutas CRUD para Sale
 @app.route('/sale', methods=['POST'])
 def add_sale():
@@ -244,6 +260,7 @@ def add_sales_detail():
         return sales_detail_schema.jsonify(new_sales_detail), 201
     except Exception as e:
         return jsonify({'error': str(e)}), 400
+
 
 @app.route('/salesdetail', methods=['GET'])
 def get_sales_details():
@@ -370,27 +387,21 @@ def delete_user(id):
     db.session.commit()
     return jsonify({'message': 'User deleted successfully'}), 204
 
-#________________________________________________________________________________________________
-
 @app.route('/login', methods=['POST'])
 def login():
     try:
-        data = request.json  # Cambiado de request.form a request.json
+        data = request.json
         username = data.get('username')
         password = data.get('password')
 
-        # Verificar las credenciales en la base de datos
         user = User.query.filter_by(User_Name=username).first()
 
         if user and user.Password == password:
             return jsonify({'success': True}), 200
         else:
-            return jsonify({'success': False, 'error': 'Invalid credentials'}), 401  # Credenciales incorrectas
+            return jsonify({'success': False, 'error': 'Invalid credentials'}), 401
     except Exception as e:
-        return jsonify({'error': str(e)}), 500  # Error interno del servidor
-
-#________________________________________________________________________________________________
-
+        return jsonify({'error': str(e)}), 500
 
 # Rutas CRUD para Supplier
 @app.route('/supplier', methods=['POST'])
@@ -486,4 +497,5 @@ def delete_user_sale(id):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
