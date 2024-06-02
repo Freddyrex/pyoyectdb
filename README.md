@@ -1,9 +1,9 @@
-#PUNTO DE VENTA
+## PUNTO DE VENTA
 
 En este repositorio se aloja un proyecto de un punto de venta diseñado para abordar una problemática de la materia de Base de Datos. Este proyecto está programado utilizando HTML, CSS, JavaScript y Python.
 Dentro del archivo "api.py" se encuentra la API con todos los métodos actualmente implementados. El modelo lógico de la base de datos está adjunto en el archivo "modelo_logico_page-0001.jpg". Además, en la carpeta "ejemplo_interface" se encuentra una demostración de cómo será la página web del punto de venta, donde se han implementado varias de las funcionalidades.
 
-#Esquema de base de datos
+# Esquema de base de datos
 
 | Campo              | Tipo              | Restricciones              |
 |--------------------|-------------------|-----------------------------|
