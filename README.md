@@ -1,5 +1,5 @@
 # P*UNTO DE VENT*A
-Este repositorio contiene un proyecto de punto de venta diseñado para abordar una problemática de la materia de Base de Datos. Está programado en HTML, CSS, JavaScript y Python. Incluye una API en "api.py" con los métodos implementados, el modelo lógico de la base de datos en "modelo_logico_page-0001.jpg" y una demostración de la interfaz en la carpeta "ejemplo_interface".
+Este repositorio contiene un proyecto de punto de venta diseñado para abordar una problemática de la materia de Base de Datos. Está programado en HTML, CSS, JavaScript y Python. Incluye una API en "api.py" con los métodos implementados, el modelo lógico de la base de datos en "modelo_logico_page-0001.jpg" y una demostración de la interfaz en la carpeta "[ejemplo_interface](https://github.com/Freddyrex/pyoyectdb/tree/main/ejemplo_interface)".
 
 ## Esquema de base de datos
 
