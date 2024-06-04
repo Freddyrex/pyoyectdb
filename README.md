@@ -123,3 +123,7 @@ Para poder usar este proyecto se debe berificar el puerto de salida de la api y 
 ──▌▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▐──────
 ──▐▄▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▄▌──────
 ────▀▄▄▀▀▀▀▀▄▄▀▀▀▀▀▀▀▄▄▀▀▀▀▀▄▄▀────────
+
+
+## Créditos
+Este proyecto fue desarrollado por Tu "[Freddy Valenzuela](https://github.com/Freddyrex)".
