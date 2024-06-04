@@ -15,7 +15,7 @@ Clona el repositorio a tu máquina local utilizando el siguiente comando:
 
 ## Copiar código
 ```
-git clone https://github.com/Freddyrex/pyoyectdb/tree/main
+git clone https://github.com/Freddyrex/pyoyectdb
 ```
 Abre el proyecto en tu editor de código preferido.
 
