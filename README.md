@@ -13,10 +13,12 @@ Este proyecto es un sistema de gestión de ventas desarrollado para permitir a l
 
 Clona el repositorio a tu máquina local utilizando el siguiente comando:
 
-bash
-Copiar código
+## Copiar código
+```
 git clone https://github.com/Freddyrex/pyoyectdb/tree/main
+```
 Abre el proyecto en tu editor de código preferido.
+
 
 Configura el servidor de backend (no incluido en este repositorio) que proporcionará los endpoints necesarios para la comunicación del frontend con la base de datos. Asegúrate de tener las rutas correctas para agregar, ver y eliminar ventas.
 
