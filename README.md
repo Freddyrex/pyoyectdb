@@ -1,5 +1,4 @@
 # P*UNTO DE VENT*A
-Este repositorio contiene un proyecto de punto de venta diseñado para abordar una problemática de la materia de Base de Datos. Está programado en HTML, CSS, JavaScript y Python. Incluye una API en "[api.py](https://github.com/Freddyrex/pyoyectdb/blob/main/api.py)" con los métodos implementados, el modelo lógico de la base de datos en "[modelo_logico_page-0001.jpg](https://github.com/Freddyrex/pyoyectdb/blob/main/modelo%20logico_page-0001.jpg)" y una demostración de la interfaz en la carpeta "[ejemplo_interface](https://github.com/Freddyrex/pyoyectdb/tree/main/ejemplo_interface)".
 
 Este proyecto es un sistema de gestión de ventas desarrollado para permitir a los usuarios administrar las ventas de una tienda o negocio de manera eficiente. Proporciona funcionalidades para agregar nuevas ventas, ver ventas existentes y eliminar ventas según sea necesario.
 
@@ -31,6 +30,9 @@ CSS
 JavaScript
 
 Para poder usar este proyecto se debe berificar el puerto de salida de la api y el de la base de datos para permiter una correcta comunicacion entre las dos ademas de instalar todas las dependiencias que usa nuestra api
+
+## Resumen
+Este repositorio contiene un proyecto de punto de venta diseñado para abordar una problemática de la materia de Base de Datos. Está programado en HTML, CSS, JavaScript y Python. Incluye una API en "[api.py](https://github.com/Freddyrex/pyoyectdb/blob/main/api.py)" con los métodos implementados, el modelo lógico de la base de datos en "[modelo_logico_page-0001.jpg](https://github.com/Freddyrex/pyoyectdb/blob/main/modelo%20logico_page-0001.jpg)" y una demostración de la interfaz en la carpeta "[ejemplo_interface](https://github.com/Freddyrex/pyoyectdb/tree/main/ejemplo_interface)".
 
 ## Esquema de base de datos
 
