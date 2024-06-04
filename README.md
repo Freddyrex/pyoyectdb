@@ -24,7 +24,6 @@ Configura el servidor de backend (no incluido en este repositorio) que proporcio
 
 Abre el archivo index.html en tu navegador web para acceder al sistema de gestión de ventas.
 
-Utiliza el sistema para agregar nuevas ventas, ver las existentes y eliminarlas según sea necesario.
 
 ## Tecnologías Utilizadas
 - HTML
