@@ -25,9 +25,10 @@ Abre el archivo index.html en tu navegador web para acceder al sistema de gesti�
 Utiliza el sistema para agregar nuevas ventas, ver las existentes y eliminarlas según sea necesario.
 
 ## Tecnologías Utilizadas
-HTML
-CSS
-JavaScript
+- HTML
+- CSS
+- JavaScript
+- Python
 
 Para poder usar este proyecto se debe berificar el puerto de salida de la api y el de la base de datos para permiter una correcta comunicacion entre las dos ademas de instalar todas las dependiencias que usa nuestra api
 
