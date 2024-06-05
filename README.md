@@ -20,7 +20,7 @@ git clone https://github.com/Freddyrex/pyoyectdb
 Abre el proyecto en tu editor de código preferido.
 
 
-Configura el servidor de backend (no incluido en este repositorio) que proporcionará los endpoints necesarios para la comunicación del frontend con la base de datos. Asegúrate de tener las rutas correctas para agregar, ver y eliminar ventas.
+Configura el motor de base de datos (no incluido en este repositorio)  para la comunicación con la base de datos, asegúrate de tener las rutas correctas.
 
 Abre el archivo index.html en tu navegador web para acceder al sistema de gestión de ventas.
 
