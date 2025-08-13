@@ -130,4 +130,4 @@ Este repositorio contiene un proyecto de punto de venta diseñado para abordar u
 
 
 ## Créditos
-Este proyecto fue desarrollado por Tu "[Freddy Valenzuela](https://github.com/Freddyrex)".
+Este proyecto fue desarrollado por "[Freddy Valenzuela](https://github.com/Freddyrex)".
